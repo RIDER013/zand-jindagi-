@@ -208,7 +208,7 @@ export default function App() {
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center pointer-events-none"
         style={{
-          backgroundImage: `url('/assets/aistudio/image_dbb3e17b.png')`,
+          backgroundImage: `url('./assets/aistudio/image_dbb3e17b.png')`,
         }}
       />
 
@@ -224,7 +224,7 @@ export default function App() {
       <div 
         className="relative z-10 w-full max-w-sm flex-1 flex flex-col justify-between p-6 bg-cover bg-center bg-no-repeat shadow-2xl border-x border-white/10 overflow-hidden"
         style={{
-          backgroundImage: `url('/assets/aistudio/image_dbb3e17b.png')`,
+          backgroundImage: `url('./assets/aistudio/image_dbb3e17b.png')`,
         }}
       >
         {/* Soft transparent top and bottom gradients */}
