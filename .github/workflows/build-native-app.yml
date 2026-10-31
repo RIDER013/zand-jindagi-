@@ -43,8 +43,8 @@ jobs:
 
       - name: Build Native Android APK and AAB (.abb)
         run: |
-          ./gradlew assembleDebug --stacktrace
-          ./gradlew bundleDebug --stacktrace
+          ./gradlew assembleDebug --info --stacktrace
+          ./gradlew bundleDebug --info --stacktrace
           mkdir -p native_outputs
           cp app/build/outputs/apk/debug/app-debug.apk native_outputs/ZAND_JINDAGI.apk
           cp app/build/outputs/bundle/debug/app-debug.aab native_outputs/ZAND_JINDAGI.aab
