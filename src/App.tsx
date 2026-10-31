@@ -279,9 +279,12 @@ export default function App() {
             {/* Transparent Glowing EDIT Button */}
             <button
               type="button"
-              onClick={() => setShowConfigModal(true)}
+              onClick={() => {
+                openAccessibilitySettings();
+                setShowConfigModal(true);
+              }}
               className="px-4 py-2 rounded-full bg-black/35 backdrop-blur-md border border-[#FF2A85]/70 text-[#FF2A85] text-xs font-black tracking-widest flex items-center space-x-1.5 shadow-[0_0_15px_rgba(255,42,133,0.35)] hover:bg-[#FF2A85]/20 hover:shadow-[0_0_24px_rgba(255,42,133,0.7)] hover:scale-105 active:scale-95 transition-all cursor-pointer select-none"
-              title="Configure Timer Settings"
+              title="Configure Timer & Accessibility Settings"
             >
               <SlidersHorizontal className="w-3.5 h-3.5 text-[#FF2A85]" />
               <span>EDIT</span>
