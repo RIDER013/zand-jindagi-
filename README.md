@@ -24,15 +24,17 @@ Rider Assistant is an Android application designed for motorcycle riders and dri
 
 ---
 
-## 🛠️ GitHub Automated Build (GitHub Actions)
+## 🛠️ GitHub Automated Build (Native APK & AAB)
 
-A ready-to-use GitHub Actions workflow is included at `.github/workflows/build-apk.yml`.
+A ready-to-use GitHub Actions workflow is included at `.github/workflows/build-native-app.yml`.
 
 Whenever you push code to GitHub:
 1. Go to the **Actions** tab on your GitHub repository.
-2. Select **Build Android APK** workflow.
-3. Click on the latest run and download the generated **`RiderAssistant-debug.apk`** under **Artifacts**.
-4. Install the APK on your Android phone.
+2. Select **Build Native Android App (AAB & APK)** workflow.
+3. Click on the latest workflow run.
+4. Under **Artifacts** at the bottom, you can download:
+   - **`ZAND_JINDAGI-apk`** (Native Android `.apk` for installing directly on any phone)
+   - **`ZAND_JINDAGI-aab`** (Native Android `.aab` / `.abb` for Google Play Console / Play Store)
 
 ---
 

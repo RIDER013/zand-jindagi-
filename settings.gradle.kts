@@ -14,5 +14,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "RiderAssistant"
+rootProject.name = "ZAND_JINDAGI"
 include(":app")

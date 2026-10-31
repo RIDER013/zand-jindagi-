@@ -1,4 +1,4 @@
-name: Build Android AAB (App Bundle)
+name: Build Native Android App (AAB & APK)
 
 on:
   push:
@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-aab:
-    name: Build Android App Bundle (.aab)
+  build-native:
+    name: Build Native ZAND JINDAGI (APK & AAB)
     runs-on: ubuntu-latest
 
     steps:
@@ -24,25 +24,28 @@ jobs:
       - name: Make Gradle Wrapper Executable
         run: chmod +x gradlew
 
-      - name: Accept Android SDK Licenses & Install Components
+      - name: Accept Android SDK Licenses & Install SDK Components
         run: |
           yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses || true
           $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-35" "build-tools;35.0.0" || true
 
-      - name: Build Android App Bundle (AAB)
-        run: ./gradlew bundleDebug --info --stacktrace --no-daemon
+      - name: Build Native Android APK and AAB (.abb)
+        run: |
+          ./gradlew assembleDebug bundleDebug --info --stacktrace --no-daemon
+          mkdir -p native_outputs
+          cp app/build/outputs/apk/debug/app-debug.apk native_outputs/ZAND_JINDAGI.apk
+          cp app/build/outputs/bundle/debug/app-debug.aab native_outputs/ZAND_JINDAGI.aab
 
-      - name: Upload AAB Artifact for Play Store
+      - name: Upload Native APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RiderAssistant-debug.aab
-          path: app/build/outputs/bundle/debug/app-debug.aab
+          name: ZAND_JINDAGI-apk
+          path: native_outputs/ZAND_JINDAGI.apk
           retention-days: 30
 
-      - name: Upload Play Store 512x512 Icon
+      - name: Upload Native AAB (.abb) Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: playstore_icon_512.png
-          path: public/playstore_icon_512.png
+          name: ZAND_JINDAGI-aab
+          path: native_outputs/ZAND_JINDAGI.aab
           retention-days: 30
-
