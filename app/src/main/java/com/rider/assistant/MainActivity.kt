@@ -216,7 +216,7 @@ class MainActivity : AppCompatActivity() {
         @JavascriptInterface
         fun swipeNextShort() {
             activity.runOnUiThread {
-                ShortsAccessibilityService.instance?.performSwipeUp("Web Preview Tap")
+                ShortsAccessibilityService.instance?.swipeNextShort()
             }
         }
 
