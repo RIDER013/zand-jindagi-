@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">ZAND JINDAGI</string>
+    <string name="accessibility_service_name">ZAND JINDAGI Earbud &amp; Gesture Control</string>
+    <string name="accessibility_description">Allows ZAND JINDAGI Assistant to perform hands-free upward swipe gestures when you tap Bluetooth earbuds or use voice control.</string>
+    <string name="shorts_accessibility_service_name">ZAND JINDAGI Reels &amp; Shorts Auto-Scroll (Turn ON)</string>
+    <string name="shorts_accessibility_description">Monitors YouTube Shorts and Instagram Reels to automatically detect video completion and perform auto-swipe gestures hands-free.</string>
+</resources>
