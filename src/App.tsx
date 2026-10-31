@@ -350,7 +350,7 @@ export default function App() {
       {/* ============================================================== */}
       {/* FLOATING Ʀ BUBBLE (Transparent Glass)                           */}
       {/* ============================================================== */}
-      {floatingBubbleEnabled && (
+      {floatingBubbleEnabled && !(typeof window !== 'undefined' && ((window as any).AndroidBridge || (window as any).ShortsAccessibility)) && (
         <div 
           className="fixed right-4 z-40 flex flex-col items-center select-none"
           style={{ top: `${floatingBubblePos.y}px` }}
