@@ -14,21 +14,22 @@ import android.webkit.*
 import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.webkit.WebViewAssetLoader
 
 /**
  * MainActivity for ZAND JINDAGI.
- * Directly renders the exact preview UI via high-performance WebView
- * with full hardware acceleration and native Android bridge integration.
+ * Renders the exact web preview UI via WebViewAssetLoader at appassets.androidplatform.net
+ * ensuring 100% parity between web preview and Android APK/AAB build.
  */
 class MainActivity : AppCompatActivity() {
 
     private lateinit var webView: WebView
+    private lateinit var assetLoader: WebViewAssetLoader
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Set status bar and navigation bar colors to deep dark
         window.statusBarColor = Color.parseColor("#080C14")
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             window.navigationBarColor = Color.parseColor("#080C14")
@@ -41,6 +42,10 @@ class MainActivity : AppCompatActivity() {
             )
             setBackgroundColor(Color.parseColor("#080C14"))
         }
+
+        assetLoader = WebViewAssetLoader.Builder()
+            .addPathHandler("/assets/", WebViewAssetLoader.AssetsPathHandler(this))
+            .build()
 
         webView = WebView(this).apply {
             layoutParams = FrameLayout.LayoutParams(
@@ -67,6 +72,13 @@ class MainActivity : AppCompatActivity() {
             }
 
             webViewClient = object : WebViewClient() {
+                override fun shouldInterceptRequest(
+                    view: WebView,
+                    request: WebResourceRequest
+                ): WebResourceResponse? {
+                    return assetLoader.shouldInterceptRequest(request.url)
+                }
+
                 override fun onReceivedError(
                     view: WebView?,
                     request: WebResourceRequest?,
@@ -84,7 +96,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            // Expose the native Android Bridge to the Web UI
+            // Expose Android Bridge
             val bridge = AndroidBridge(this@MainActivity)
             addJavascriptInterface(bridge, "AndroidBridge")
             addJavascriptInterface(bridge, "ShortsAccessibility")
@@ -93,10 +105,9 @@ class MainActivity : AppCompatActivity() {
         rootLayout.addView(webView)
         setContentView(rootLayout)
 
-        // Load the exact bundled web application
-        webView.loadUrl("file:///android_asset/www/index.html")
+        // Load the web app via WebViewAssetLoader
+        webView.loadUrl("https://appassets.androidplatform.net/assets/www/index.html")
 
-        // Initialize background auto-scroll & overlay features
         ShortsAccessibilityService.isAutoScrollEnabled = true
         ShortsAccessibilityService.scrollMode = "TIMER"
         ShortsAccessibilityService.timerIntervalSeconds = 30
@@ -105,23 +116,17 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        if (::webView.isInitialized) {
-            webView.onResume()
-        }
+        if (::webView.isInitialized) webView.onResume()
     }
 
     override fun onPause() {
         super.onPause()
-        if (::webView.isInitialized) {
-            webView.onPause()
-        }
+        if (::webView.isInitialized) webView.onPause()
     }
 
     override fun onDestroy() {
         try {
-            if (::webView.isInitialized) {
-                webView.destroy()
-            }
+            if (::webView.isInitialized) webView.destroy()
         } catch (e: Exception) {}
         super.onDestroy()
     }
@@ -175,10 +180,6 @@ class MainActivity : AppCompatActivity() {
         FloatingBubbleService.startBubble(this)
     }
 
-    /**
-     * JavaScript Bridge providing full hardware and Android OS integration
-     * to the exact Web UI preview.
-     */
     inner class AndroidBridge(private val activity: MainActivity) {
 
         @JavascriptInterface
